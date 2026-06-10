@@ -4,10 +4,17 @@ metadata:
   name: alb-test
   labels:
     app: alb-test
+  annotations:
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]' # force HTTPS listener
+    external-dns.alpha.kubernetes.io/hostname: "alb-test.dev.brave.int.bayer.com" # set the hostname for external-dns to create the correct DNS record
 spec:
   ingressClassName: alb-test
+  tls:
+    - hosts:
+        - alb-test.dev.brave.int.bayer.com # auto-selects the certificate from ACM based on the hostname
   rules:
-    - http:
+    - host: alb-test.dev.brave.int.bayer.com
+      http:
         paths:
           - path: /
             pathType: Prefix

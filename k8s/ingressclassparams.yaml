@@ -5,10 +5,16 @@ metadata:
 spec:
   scheme: internal
   ipAddressType: ipv4
+  targetType: ip
   namespaceSelector:
     matchLabels: {}
-  ingressGroup:
+  group:
     name: alb-test
+  listeners:
+    - protocol: HTTPS
+      port: 443
+  sslPolicy: ELBSecurityPolicy-TLS13-1-3-2021-06
+  wafv2AclName: brave-alb
   loadBalancerAttributes:
     - key: idle_timeout.timeout_seconds
       value: "60"
