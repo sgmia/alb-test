@@ -1,0 +1,17 @@
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: IngressClassParams
+metadata:
+  name: alb-test
+spec:
+  scheme: internal
+  ipAddressType: ipv4
+  namespaceSelector:
+    matchLabels: {}
+  ingressGroup:
+    name: alb-test
+  loadBalancerAttributes:
+    - key: idle_timeout.timeout_seconds
+      value: "60"
+  tags:
+    - key: app
+      value: alb-test

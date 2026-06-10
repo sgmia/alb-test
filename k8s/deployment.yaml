@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alb-test
+  labels:
+    app: alb-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alb-test
+  template:
+    metadata:
+      labels:
+        app: alb-test
+    spec:
+      containers:
+        - name: alb-test
+          image: ghcr.io/sgmia/alb-test:main
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
