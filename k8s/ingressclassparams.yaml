@@ -3,13 +3,12 @@ kind: IngressClassParams
 metadata:
   name: alb-test
 spec:
+  loadBalancerName: brave-alb
   scheme: internal
   ipAddressType: ipv4
   targetType: ip
   namespaceSelector:
     matchLabels: {}
-  group:
-    name: alb-test
   listeners:
     - protocol: HTTPS
       port: 443
